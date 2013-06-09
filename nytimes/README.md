@@ -30,11 +30,15 @@ Import the library and start grabbing content:
     >>> a.search_by_subject("fashion")
     >>> a.capture("folder/path")
 
+The above example uses `search_by_subject` using [fq](http://developer.nytimes.com/docs/read/article_search_api_v2#filters) parameter:
+
+    a.search_by_subject("fashion")
+
 You can also search via [news desk](http://developer.nytimes.com/docs/read/article_search_api_v2#filters):
 
     a.search_by_newsdesk("sports")
 
-As well as general query:
+as well as general query:
 
     a.search_by_query("query term")
 
