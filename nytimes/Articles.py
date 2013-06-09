@@ -3,9 +3,14 @@
 """
 Articles.py
 
-NYTimes.com provides developers with means for pulling in data. Usage:
+NYTimes.com provides developers with means for pulling in data. This 
+is just a simple a wrapper around it. 
 
-    nyt = Articles("f5907cf5d2a365222ae936e082230e81:5:67753100")
+Usage:
+
+    from nytimes import *
+    nyt = Articles("{api_key}")
+    nyt.max_pages(10) # pull up to 10 pages of data - there are 10 records per page
     nyt.get_by_newsdesk("technology", "content/nytimes/technology/")
 
 For more info:
@@ -13,7 +18,6 @@ http://developer.nytimes.com/
 """
 
 import urllib
-import pprint
 import errno
 import json
 import os
@@ -29,13 +33,14 @@ class Articles:
 
     def __init__(self, api_key):
         self.search_api = self.search_api % api_key
+        self.search_url = self.endpoint + "?" + self.search_fl + "&" + self.search_api + "&" + self.search_pg
 
     def get_by_newsdesk(self, string, path):
-        search_url = self.endpoint + "?" + self.search_fl + "&" + self.search_api + "&" + self.search_fq['by_newsdesk'] % string + "&" + self.search_pg
+        search_url = self.search_url + "&" + self.search_fq['by_newsdesk'] % string
         self.capture(search_url, path)
 
     def get_by_subject(self, string, path):
-        search_url = self.endpoint + "?" + self.search_fl + "&" + self.search_api + "&" + self.search_fq['by_subject'] % string + "&" + self.search_pg
+        search_url = self.search_url + "&" + self.search_fq['by_subject'] % string
         self.capture(search_url, path)
 
     def capture(self, search_url, path):
