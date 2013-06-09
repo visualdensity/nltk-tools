@@ -11,6 +11,10 @@ will quite likely change as I add more tools.
 Quick use
 ---------
 
+Before you begin, please head over to http://developer.nytimes.com and
+get yourself a set of API keys. For the Articles to work, you'll need the
+Articles API. 
+
 CD into the project directory:
 
     % git clone git@github.com:visualdensity/nltk-tools.git

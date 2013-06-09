@@ -14,7 +14,7 @@ Usage:
     nyt.get_by_newsdesk("technology", "content/nytimes/technology/")
 
 For more info:
-http://developer.nytimes.com/
+http://developer.nytimes.com/docs/read/article_search_api_v2
 """
 
 import urllib
@@ -24,23 +24,33 @@ import os
 
 class Articles:
 
-    search_fq  = { 'by_subject':"fq=subject:(\"%s\")", 'by_newsdesk': "fq=news_desk:(\"%s\")" }
     endpoint   = "http://api.nytimes.com/svc/search/v2/articlesearch.json"
+
     search_fl  = "fl=keywords,snippet,headline,news_desk"
     search_api = "api-key=%s"
     search_pg  = "page=%s"
     page_limit = 10
+
+    search_q   = { 
+                    'by_subject'  : "fq=subject:(\"%s\")", 
+                    'by_newsdesk' : "fq=news_desk:(\"%s\")", 
+                    'by_query'    : "q=%s"
+                 }
 
     def __init__(self, api_key):
         self.search_api = self.search_api % api_key
         self.search_url = self.endpoint + "?" + self.search_fl + "&" + self.search_api + "&" + self.search_pg
 
     def get_by_newsdesk(self, string, path):
-        search_url = self.search_url + "&" + self.search_fq['by_newsdesk'] % string
+        search_url = self.search_url + "&" + self.search_q['by_newsdesk'] % string
         self.capture(search_url, path)
 
     def get_by_subject(self, string, path):
-        search_url = self.search_url + "&" + self.search_fq['by_subject'] % string
+        search_url = self.search_url + "&" + self.search_q['by_subject'] % string
+        self.capture(search_url, path)
+
+    def get_by_query(self, string, path):
+        search_url = self.search_url + "&" + self.search_q['by_query'] % string
         self.capture(search_url, path)
 
     def capture(self, search_url, path):
