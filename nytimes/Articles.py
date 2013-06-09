@@ -69,6 +69,12 @@ class Articles:
                 self.save_content(path, filename, stanza)
                 count += 1
 
+    def get_data(self, url):
+        response = urllib.urlopen(url)
+        content  = json.load(response)
+
+        return content
+
     def build_stanza(self, item):
         stanza = ''
         if item['headline']['main']:
@@ -84,12 +90,6 @@ class Articles:
 
     def max_pages(self, page_limit):
         self.page_limit = int(page_limit)
-
-    def get_data(self, url):
-        response = urllib.urlopen(url)
-        content  = json.load(response)
-
-        return content
 
     def save_content(self, path, filename, content):
         if not os.path.exists( path ):
