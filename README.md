@@ -31,6 +31,11 @@ Then import the library and start grabbing content:
     >>> a.max_pages(5)
     >>> a.get_by_subject("fashion", "content/fashion")
 
+Once you've imported the content, you can then generate an index, labelling each
+content file with its context for training:
+
+    % ./indexer.py
+
 
 Resources
 ---------
