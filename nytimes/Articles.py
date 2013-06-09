@@ -37,26 +37,30 @@ class Articles:
                     'by_query'    : "q=%s"
                  }
 
+    base_url   = ''
+    search_url = ''
+
+
     def __init__(self, api_key):
         self.search_api = self.search_api % api_key
-        self.search_url = self.endpoint + "?" + self.search_fl + "&" + self.search_api + "&" + self.search_pg
+        self.base_url = self.endpoint + "?" + self.search_fl + "&" + self.search_api + "&" + self.search_pg
 
-    def get_by_newsdesk(self, string, path):
-        search_url = self.search_url + "&" + self.search_q['by_newsdesk'] % string
-        self.capture(search_url, path)
+    def search_by_newsdesk(self, string):
+        self.search_url = self.base_url + "&" + self.search_q['by_newsdesk'] % string
 
-    def get_by_subject(self, string, path):
-        search_url = self.search_url + "&" + self.search_q['by_subject'] % string
-        self.capture(search_url, path)
+    def search_by_subject(self, string):
+        self.search_url = self.base_url + "&" + self.search_q['by_subject'] % string
 
-    def get_by_query(self, string, path):
-        search_url = self.search_url + "&" + self.search_q['by_query'] % string
-        self.capture(search_url, path)
+    def search_by_query(self, string):
+        self.search_url = self.base_url + "&" + self.search_q['by_query'] % string
 
-    def capture(self, search_url, path):
+    def get_query_url(self):
+        return self.search_url
+
+    def capture(self, path):
         count = 0
         for i in range(0, self.page_limit):
-            content = self.get_data(search_url % i)
+            content = self.get_data(self.search_url % i)
 
             for item in content['response']['docs']:
                 stanza   = self.build_stanza(item)
