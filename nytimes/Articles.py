@@ -54,18 +54,15 @@ class Articles:
         self.capture(search_url, path)
 
     def capture(self, search_url, path):
-        if not os.path.exists( path ):
-            self.mkdir_p(path)
-
         count = 0
         for i in range(0, self.page_limit):
             content = self.get_data(search_url % i)
 
             for item in content['response']['docs']:
                 stanza   = self.build_stanza(item)
-                filepath = path + '/' + str(count).zfill(4)
+                filename = str(count).zfill(4)
 
-                self.save_content(filepath, stanza)
+                self.save_content(path, filename, stanza)
                 count += 1
 
     def build_stanza(self, item):
@@ -90,8 +87,13 @@ class Articles:
 
         return content
 
-    def save_content(self, path, content):
-        f = open( path, 'w' )
+    def save_content(self, path, filename, content):
+        if not os.path.exists( path ):
+            self.mkdir_p(path)
+
+        filepath = path + '/' + filename
+
+        f = open( filepath, 'w' )
         f.write(content)
         f.close()
 
