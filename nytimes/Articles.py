@@ -8,8 +8,8 @@ NYTimes.com provides developers with means for pulling in data. Usage:
     nyt = Articles("f5907cf5d2a365222ae936e082230e81:5:67753100")
     nyt.get_by_newsdesk("technology", "content/nytimes/technology/")
 
-Full with keywords:
-http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=subject:("%s")&api-key=%s&fl=keywords,snippet,headline,news_desk&page=%s
+For more info:
+http://developer.nytimes.com/
 """
 
 import urllib
@@ -20,13 +20,11 @@ import os
 
 class Articles:
 
+    search_fq  = { 'by_subject':"fq=subject:(\"%s\")", 'by_newsdesk': "fq=news_desk:(\"%s\")" }
     endpoint   = "http://api.nytimes.com/svc/search/v2/articlesearch.json"
-
     search_fl  = "fl=keywords,snippet,headline,news_desk"
     search_api = "api-key=%s"
     search_pg  = "page=%s"
-    search_fq  = { 'by_subject':"fq=subject:(\"%s\")", 'by_newsdesk': "fq=news_desk:(\"%s\")" }
-
     page_limit = 10
 
     def __init__(self, api_key):
