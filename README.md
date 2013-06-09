@@ -2,7 +2,7 @@ NLTK Tools
 ==========
 
 A collection of tools that I'm building to help me with a little NLP project
-using Python's (NLTK)[http://nltk.org/] package. 
+using Python's [NLTK](http://nltk.org/) package. 
 
 Currently, this repo allows you to build your own corpus in the format that
 is compatible with the rest of the NLTK's corpora
