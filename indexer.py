@@ -10,7 +10,7 @@ is created for use with NLTK's corpus library.
 import os
 
 index_file    = 'cats.txt'
-training_path = 'trainig/'
+training_path = 'training/'
 
 f = open(index_file, 'w')
 
