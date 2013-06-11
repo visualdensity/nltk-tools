@@ -25,6 +25,10 @@ in the following format:
     content/business/0002 business
     ...
 
+Note
+----
+  * Training data under `training/` is meant to be a sample only. 
+  * Go to `tools/` folder for more info.
 
 Resources
 ---------
