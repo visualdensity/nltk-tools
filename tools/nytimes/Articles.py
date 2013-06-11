@@ -15,6 +15,10 @@ Usage:
 
 For more info:
 http://developer.nytimes.com/docs/read/article_search_api_v2
+
+Todo:
+  * Extract fl query configuration
+  * Constructable query
 """
 
 import urllib
@@ -43,7 +47,7 @@ class Articles:
 
     def __init__(self, api_key):
         self.search_api = self.search_api % api_key
-        self.base_url = self.endpoint + "?" + self.search_fl + "&" + self.search_api + "&" + self.search_pg
+        self.base_url = self.endpoint + "?" + self.search_fl + "&" + self.search_api
 
     def search_by_newsdesk(self, string):
         self.search_url = self.base_url + "&" + self.search_q['by_newsdesk'] % string
@@ -60,7 +64,7 @@ class Articles:
     def capture(self, path):
         count = 0
         for i in range(0, self.page_limit):
-            content = self.get_data(self.search_url % i)
+            content = self.get_data(self.search_url + "&" + self.search_pg % i)
 
             for item in content['response']['docs']:
                 stanza   = self.build_stanza(item)
