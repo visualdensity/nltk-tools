@@ -8,7 +8,9 @@ an index of labels for contents in a cats.txt file. This
 is created for use with NLTK's corpus library.
 """
 import os
+import re
 import sys
+import fileinput
 
 def build_index(index_file = 'cats.txt', training_path = 'training/'):
 
@@ -30,6 +32,25 @@ def build_index(index_file = 'cats.txt', training_path = 'training/'):
 
             f.write(cat_line)
     f.closed 
+
+
+def cleanup( target_path='training/', word_selection=False ):
+    """Remove various punctuations, numbers from the data"""
+
+    cleaner = re.compile(r'[\$-.?!,":;()|0-9]+')
+
+    if not os.path.exists(target_path):
+        print "Input path " + target_path + " not found."
+        sys.exit()
+
+    for top, dirs, files in os.walk(target_path):
+        for nm in files:
+            filepath = os.path.join(top, nm)
+
+            for line in fileinput.input(filepath, inplace=True):
+                line = cleaner.sub("", line)
+                print line
+
 
 if __name__ == '__main__':
     build_index()
