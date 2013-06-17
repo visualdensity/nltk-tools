@@ -34,10 +34,13 @@ def build_index(index_file = 'cats.txt', training_path = 'training/'):
     f.closed 
 
 
-def cleanup( target_path='training/', word_selection=False ):
+def cleanup( target_path='training/', regex=False, edit_inplace=True ):
     """Remove various punctuations, numbers from the data"""
 
-    cleaner = re.compile(r'[\$-.?!,":;()|0-9]+')
+    if not regex: 
+        cleaner = re.compile(r'[\$-.?!,":;()|0-9]+')
+    else:
+        cleaner = re.compile(regex)
 
     if not os.path.exists(target_path):
         print "Input path " + target_path + " not found."
@@ -47,7 +50,7 @@ def cleanup( target_path='training/', word_selection=False ):
         for nm in files:
             filepath = os.path.join(top, nm)
 
-            for line in fileinput.input(filepath, inplace=True):
+            for line in fileinput.input(filepath, inplace=edit_inplace):
                 line = cleaner.sub("", line)
                 print line
 
